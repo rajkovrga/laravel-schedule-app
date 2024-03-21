@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Utils\Roles;
 use Closure;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
@@ -10,6 +11,12 @@ use Outerweb\FilamentSettings\Filament\Pages\Settings as BaseSettings;
 class Settings extends BaseSettings
 {
     protected static ?int $navigationSort = 30;
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasRole(Roles::Admin);
+    }
+
     public function schema(): array|Closure
     {
         return [

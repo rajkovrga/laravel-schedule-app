@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CompanyJobResource\Pages;
 use App\Filament\Resources\CompanyJobResource\RelationManagers;
 use App\Models\CompanyJob;
+use App\Utils\Permissions;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -19,7 +20,10 @@ class CompanyJobResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
     protected static ?int $navigationSort = 20;
-
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasAnyPermission([Permissions::ViewJobs, Permissions::ViewAllJobs]);
+    }
     public static function form(Form $form): Form
     {
         return $form

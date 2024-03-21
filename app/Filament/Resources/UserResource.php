@@ -3,15 +3,15 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
+use App\Utils\Permissions;
+use App\Utils\Roles;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
 {
@@ -19,6 +19,11 @@ class UserResource extends Resource
     protected static ?int $navigationSort = 0;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasAnyPermission([Permissions::ViewAllUsers, Permissions::ViewUsers]);
+    }
 
     public static function form(Form $form): Form
     {
@@ -33,7 +38,13 @@ class UserResource extends Resource
                     ->maxLength(255),
                 Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\Select::make('company_id')
-                    ->relationship('company', 'name')
+                    ->relationship('company', 'name'),
+                Select::make('roles')->relationship('roles', 'name')
+                    ->default(Roles::CompanyUser)
+                    ->visible(fn() => auth()->user()->roles()->first()->name === Roles::Admin),
+                Select::make('roles')->relationship('roles', 'name',)
+                    ->default(Roles::CompanyUser)
+                    ->visible(fn() => auth()->user()->roles()->first()->name === Roles::CompanyManager)
             ]);
     }
 
