@@ -3,8 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Filament\Facades\Filament;
-use Illuminate\Support\HtmlString;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -12,7 +10,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-
     }
 
     /**

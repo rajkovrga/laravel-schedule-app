@@ -12,12 +12,14 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Spatie\Permission\Models\Role;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
     protected static ?int $navigationSort = 0;
-
+    protected static bool $shouldSkipAuthorization = true;
+    protected static bool $isScopedToTenant = true;
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function canAccess(): bool
@@ -36,14 +38,16 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+                Forms\Components\DateTimePicker::make('email_verified_at')
+                    ->visible(fn() => auth()->user()->roles()->first()->name === Roles::Admin),
                 Forms\Components\Select::make('company_id')
-                    ->relationship('company', 'name'),
+                    ->relationship('company', 'name')
+                    ->visible(fn() => auth()->user()->roles()->first()->name === Roles::Admin),
                 Select::make('roles')->relationship('roles', 'name')
                     ->default(Roles::CompanyUser)
                     ->visible(fn() => auth()->user()->roles()->first()->name === Roles::Admin),
-                Select::make('roles')->relationship('roles', 'name',)
-                    ->default(Roles::CompanyUser)
+                Select::make('roles')->relationship('roles', 'name')
+                    ->options(Role::query()->where('name', '!=', Roles::Admin)->get()->pluck('name', 'id'))
                     ->visible(fn() => auth()->user()->roles()->first()->name === Roles::CompanyManager)
             ]);
     }

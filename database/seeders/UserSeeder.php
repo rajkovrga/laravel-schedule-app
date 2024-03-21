@@ -26,6 +26,16 @@ class UserSeeder extends Seeder
 
         $adminUser->assignRole(Roles::Admin);
 
+        $adminUser = User::create([
+            'name' => 'rajkov',
+            'email' => 'manager@vrga.dev',
+            'password' => '12345',
+            'email_verified_at' => now(),
+            'company_id' => Company::all()->random()->id
+        ]);
+
+        $adminUser->assignRole(Roles::CompanyManager);
+
         $users = User::factory()
             ->count(100)
             ->state(new Sequence(
