@@ -5,6 +5,8 @@ namespace App\Providers\Filament;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 use App\Filament\Pages\CustomTwoFactorPage;
 use App\Filament\Pages\Settings;
+use App\Models\Company;
+use App\Models\User;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;

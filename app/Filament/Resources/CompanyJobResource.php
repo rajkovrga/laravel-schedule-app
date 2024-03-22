@@ -6,6 +6,7 @@ use App\Filament\Resources\CompanyJobResource\Pages;
 use App\Filament\Resources\CompanyJobResource\RelationManagers;
 use App\Models\CompanyJob;
 use App\Utils\Permissions;
+use App\Utils\Roles;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -35,6 +36,7 @@ class CompanyJobResource extends Resource
                     ->required()
                     ->numeric(),
                 Forms\Components\Select::make('company_id')
+                    ->visible(fn() => auth()->user()->roles()->first()->name === Roles::Admin)
                     ->relationship('company', 'name')
                     ->required(),
             ]);

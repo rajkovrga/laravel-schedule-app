@@ -17,4 +17,5 @@ class Company extends Model
     public function jobs(): BelongsTo {
         return $this->belongsTo(CompanyJob::class);
     }
+
 }
