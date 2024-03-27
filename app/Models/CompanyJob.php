@@ -8,10 +8,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Spatie\Permission\Models\Role;
 
 class CompanyJob extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'duration',
+        'company_id'
+    ];
 
     public function company(): BelongsTo
     {
@@ -21,7 +28,13 @@ class CompanyJob extends Model
     protected static function booted(): void
     {
         static::addGlobalScope('user', function (Builder $query) {
-            if (auth()->check() && !auth()->user()->hasRole(Roles::Admin)) {
+            $user = auth()->user();
+
+            if ($user->hasRole(Roles::User)) {
+                return;
+            }
+
+            if (!$user->hasRole(Roles::Admin)) {
                 $query->where('company_id', auth()->user()->company_id);
             }
         });

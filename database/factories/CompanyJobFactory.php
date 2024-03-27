@@ -18,7 +18,7 @@ class CompanyJobFactory extends Factory
     {
         return [
             'name' => $this->faker->jobTitle,
-            'during' => random_int(20,100)
+            'duration' => random_int(20,100)
         ];
     }
 }

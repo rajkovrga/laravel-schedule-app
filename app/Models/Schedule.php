@@ -2,17 +2,35 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Casts\MultiTimestampRangeCast;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Schedule extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'dates',
+        'user_id',
+        'manager_id',
+        'company_id',
+        'job_id',
+    ];
 
-    public function schedule_requests(): BelongsTo
+
+    protected function casts(): array
     {
-        return $this->belongsTo(ScheduleRequest::class);
+        return [
+            'dates' => MultiTimestampRangeCast::class,
+        ];
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function companyJob(): BelongsTo
+    {
+        return $this->belongsTo(CompanyJob::class);
     }
 }

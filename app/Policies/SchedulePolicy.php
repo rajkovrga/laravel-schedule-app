@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
+use App\Utils\Roles;
 use App\Models\Schedule;
 use App\Models\User;
 
@@ -13,7 +13,7 @@ class SchedulePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Schedule');
+        return $user->hasRole(Roles::CompanyManager);
     }
 
     /**
@@ -21,15 +21,7 @@ class SchedulePolicy
      */
     public function view(User $user, Schedule $schedule): bool
     {
-        return $user->checkPermissionTo('view Schedule');
-    }
-
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
-    {
-        return $user->checkPermissionTo('create Schedule');
+        return $user->hasRole(Roles::CompanyManager);
     }
 
     /**
@@ -37,7 +29,7 @@ class SchedulePolicy
      */
     public function update(User $user, Schedule $schedule): bool
     {
-        return $user->checkPermissionTo('update Schedule');
+        return $user->hasRole(Roles::CompanyManager);
     }
 
     /**
@@ -45,7 +37,7 @@ class SchedulePolicy
      */
     public function delete(User $user, Schedule $schedule): bool
     {
-        return $user->checkPermissionTo('delete Schedule');
+        return $user->hasRole(Roles::CompanyManager);
     }
 
     /**
@@ -53,7 +45,7 @@ class SchedulePolicy
      */
     public function restore(User $user, Schedule $schedule): bool
     {
-        return $user->checkPermissionTo('restore Schedule');
+        return $user->hasRole(Roles::CompanyManager);
     }
 
     /**
@@ -61,6 +53,6 @@ class SchedulePolicy
      */
     public function forceDelete(User $user, Schedule $schedule): bool
     {
-        return $user->checkPermissionTo('force-delete Schedule');
+        return $user->hasRole(Roles::CompanyManager);
     }
 }

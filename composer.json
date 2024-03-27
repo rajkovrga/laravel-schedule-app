@@ -5,17 +5,19 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "althinect/filament-spatie-roles-permissions": "^2.2",
         "filament/filament": "^3.2",
         "filament/forms": "^3.2",
         "jeffgreco13/filament-breezy": "^2.3",
         "laravel/framework": "^11.0",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "outerweb/filament-settings": "^1.1",
         "outerweb/settings": "^1.0",
         "rawilk/filament-password-input": "^2.0",
-        "spatie/laravel-permission": "^6.4"
+        "spatie/laravel-permission": "^6.4",
+        "tpetry/laravel-postgresql-enhanced": "^0.37.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -24,7 +26,8 @@
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
         "phpunit/phpunit": "^10.5",
-        "spatie/laravel-ignition": "^2.4"
+        "spatie/laravel-ignition": "^2.4",
+        "spatie/laravel-ray": "^1.35"
     },
     "autoload": {
         "psr-4": {

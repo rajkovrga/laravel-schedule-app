@@ -39,6 +39,7 @@ class RoleAndPermissionSeeder extends Seeder
         Permissions::CreateSchedule,
         Permissions::DeleteSchedule,
         Permissions::EditSchedule,
+        Permissions::CreatePotentialSchedule
     ];
 
     /**
@@ -88,6 +89,9 @@ class RoleAndPermissionSeeder extends Seeder
             ],
             Roles::CompanyUser => [
                 Permissions::ViewScheduleCalendar
+            ],
+            Roles::User => [
+                Permissions::CreatePotentialSchedule
             ]
         ];
 

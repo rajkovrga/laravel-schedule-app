@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Company;
 use App\Models\User;
 use App\Utils\Roles;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -17,24 +16,39 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $company = Company::create([
+            'name' => 'Vrga DEV'
+        ]);
+
         $adminUser = User::create([
             'name' => 'rajkovrga',
             'email' => 'rajko@vrga.dev',
             'password' => '12345',
             'email_verified_at' => now(),
+            'company_id' => $company->id,
         ]);
 
         $adminUser->assignRole(Roles::Admin);
 
         $adminUser = User::create([
-            'name' => 'rajkov',
+            'name' => 'rajkovrga',
             'email' => 'manager@vrga.dev',
             'password' => '12345',
             'email_verified_at' => now(),
-            'company_id' => Company::all()->random()->id
+            'company_id' => $company->id,
         ]);
 
         $adminUser->assignRole(Roles::CompanyManager);
+
+        $adminUser = User::create([
+            'name' => 'rajkovrga',
+            'email' => 'user@vrga.dev',
+            'password' => '12345',
+            'email_verified_at' => now(),
+            'company_id' => $company->id,
+        ]);
+
+        $adminUser->assignRole(Roles::User);
 
         $users = User::factory()
             ->count(100)

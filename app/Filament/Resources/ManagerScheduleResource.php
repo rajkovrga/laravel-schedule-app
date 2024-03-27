@@ -2,44 +2,37 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CompanyJobResource\Pages;
-use Filament\Forms\Components\TextInput;
-use App\Models\CompanyJob;
-use App\Utils\Permissions;
+use App\Filament\Resources\ScheduleResource\Pages;
+use App\Models\Schedule;
 use App\Utils\Roles;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CompanyJobResource extends Resource
+class ManagerScheduleResource extends Resource
 {
-    protected static ?string $model = CompanyJob::class;
+    protected static ?string $model = Schedule::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
-    protected static ?int $navigationSort = 20;
-    public static function canAccess(): bool
-    {
-        return auth()->user()->hasAnyPermission([Permissions::ViewJobs, Permissions::ViewAllJobs]);
-    }
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('duration')
-                    ->required()
-                    ->numeric(),
                 Forms\Components\Select::make('company_id')
                     ->relationship('company', 'name')
-                    ->visible(fn() => auth()->user()->roles()->first()->name === Roles::Admin)
-                    ->native(false)
-                    ->searchable()
-                    ->preload()
+                    ->required(),
+                Forms\Components\TextInput::make('manager_id')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('job_id')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\DateTimePicker::make('schedule_date')
                     ->required(),
             ]);
     }
@@ -48,14 +41,17 @@ class CompanyJobResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('duration')
+                Tables\Columns\TextColumn::make('company.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('company.name')
-                    ->visible(fn() => auth()->user()->roles()->first()->name === Roles::Admin)
+                Tables\Columns\TextColumn::make('manager_id')
                     ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('job_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('schedule_date')
+                    ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -78,12 +74,12 @@ class CompanyJobResource extends Resource
                 ]),
             ]);
     }
+
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCompanyJobs::route('/'),
-            'create' => Pages\CreateCompanyJob::route('/create'),
-            'edit' => Pages\EditCompanyJob::route('/{record}/edit'),
+            'index' => Pages\ListSchedules::route('/'),
+            'edit' => Pages\EditSchedule::route('/{record}/edit'),
         ];
     }
 }

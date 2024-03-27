@@ -6,7 +6,6 @@ use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugi
 use App\Filament\Pages\CustomTwoFactorPage;
 use App\Filament\Pages\Settings;
 use App\Models\Company;
-use App\Models\User;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -35,17 +34,27 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('')
             ->login()
-            ->requiresEmailVerification()
+            ->registration()
             ->passwordReset()
+            ->loginRouteSlug('login')
+            ->emailVerification()
+            ->passwordResetRoutePrefix('password-reset')
+            ->passwordResetRequestRouteSlug('request')
+            ->passwordResetRouteSlug('reset')
+            ->emailVerificationRoutePrefix('email-verification')
+            ->emailVerificationPromptRouteSlug('prompt')
+            ->emailVerificationRouteSlug('verify')
             ->colors([
                 'primary' => Color::Teal,
             ])
             ->plugins([
                 BreezyCore::make()
                     ->myProfile(
+                        shouldRegisterNavigation: true,
                         hasAvatars: true,
                         navigationGroup: 'Settings',
                     )
+                    ->enableSanctumTokens()
                     ->enableTwoFactorAuthentication(
                         action: CustomTwoFactorPage::class
                     ),
@@ -53,7 +62,7 @@ class AdminPanelProvider extends PanelProvider
                     ->pages([
                         Settings::class,
                     ]),
-                FilamentSpatieRolesPermissionsPlugin::make()
+                FilamentSpatieRolesPermissionsPlugin::make(),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

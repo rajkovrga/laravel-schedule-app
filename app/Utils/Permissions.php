@@ -25,6 +25,7 @@ readonly abstract class Permissions
     public const CreateSchedule = 'create schedule';
     public const EditSchedule = 'edit schedule';
     public const DeleteSchedule = 'delete schedule';
+    public const CreatePotentialSchedule = 'create potential schedule';
 
     // Companies
     public const ViewAllCompanies = 'view all companies';
@@ -55,6 +56,7 @@ readonly abstract class Permissions
             self::CreateSchedule,
             self::EditSchedule,
             self::DeleteSchedule,
+            self::CreatePotentialSchedule,
         ];
     }
 }
