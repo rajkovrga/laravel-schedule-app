@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\ManagerScheduleAcceptResource\Pages;
+namespace App\Filament\Resources\UserScheduleResource\Pages;
 
-use App\Filament\Resources\UserScheduleAcceptResource;
+use App\Filament\Resources\UserScheduleResource;
 use Carbon\CarbonImmutable;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateUserSchedule extends CreateRecord
 {
-    protected static string $resource = UserScheduleAcceptResource::class;
+    protected static string $resource = UserScheduleResource::class;
 
     public const string DATE_FORMAT = 'Y-m-d H:i:s';
 
@@ -16,6 +16,7 @@ class CreateUserSchedule extends CreateRecord
     {
         $members = $data['members'] ?? [];
         unset($data['members']);
+        $data['user_id'] = auth()->user()->id;
 
         return [
             ...$data,

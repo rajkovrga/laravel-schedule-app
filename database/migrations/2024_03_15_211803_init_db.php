@@ -52,7 +52,7 @@ return new class extends Migration {
                 ->nullable()
                 ->references('id')
                 ->on('users');
-            $table->foreignId('job_id')->references('id')->on('company_jobs');
+            $table->foreignId('company_job_id')->references('id')->on('company_jobs');
             $table->foreignId('user_id')->references('id')->on('users');
         });
     }

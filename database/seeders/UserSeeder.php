@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Company;
+use App\Models\CompanyJob;
 use App\Models\User;
 use App\Utils\Roles;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -61,6 +62,27 @@ class UserSeeder extends Seeder
 
         foreach ($users as $user) {
             $user->assignRole(fake()->randomElement($roles));
+        }
+
+        $jobs = [
+            [
+                'name' => 'Vrga DEV',
+                'company_id' => $company->id,
+                'duration' => 10
+            ],
+            [
+                'name' => 'Vrga DEV 2',
+                'company_id' => $company->id,
+                'duration' => 30
+            ],
+            [
+                'name' => 'Vrga DEV 3',
+                'company_id' => $company->id,
+                'duration' => 70
+            ]];
+
+        foreach ($jobs as $item) {
+            CompanyJob::create($item);
         }
     }
 }

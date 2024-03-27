@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\ScheduleResource\Pages;
+namespace App\Filament\Resources\ManagerScheduleResource\Pages;
 
 use App\Filament\Resources\ManagerScheduleResource;
 use Filament\Actions;
@@ -10,8 +10,4 @@ class ListSchedules extends ListRecords
 {
     protected static string $resource = ManagerScheduleResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [];
-    }
 }

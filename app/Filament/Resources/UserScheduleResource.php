@@ -2,18 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ManagerScheduleAcceptResource\Pages;
+use App\Filament\Resources\UserScheduleResource\Pages;
 use App\Models\CompanyJob;
 use App\Models\Schedule;
+use App\Models\User;
 use App\Utils\Roles;
+use DateTimeZone;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Table;
+use Filament\Tables;
 
-class UserScheduleAcceptResource extends Resource
+class UserScheduleResource extends Resource
 {
     protected static ?string $model = Schedule::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -35,7 +40,7 @@ class UserScheduleAcceptResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
-                Select::make('job_id')
+                Select::make('company_job_id')
                     ->relationship('companyJob', 'name')
                     ->native(false)
                     ->reactive()
@@ -56,9 +61,39 @@ class UserScheduleAcceptResource extends Resource
                             ->required(),
                         DateTimePicker::make('end_date')
                             ->native(false)
+                            ->minDate(now())
                             ->required()
                     ])
                     ->columns(2)
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->query(
+                fn() => Schedule::query()
+                    ->where('user_id', auth()->user()->id)
+                    ->whereNotNull('schedule_date')
+                    ->where('schedule_date', '>=', now())
+            )
+            ->actions([
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ])
+            ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('companyJob.name')
+                    ->label('Job')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('company.name')
+                    ->numeric()
+                    ->sortable(),
             ]);
     }
 
@@ -73,7 +108,8 @@ class UserScheduleAcceptResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\CreateUserSchedule::route('/create'),
+            'index' => Pages\ListUserSchedule::route('/'),
+            'create' => Pages\CreateUserSchedule::route('/create'),
         ];
     }
 }

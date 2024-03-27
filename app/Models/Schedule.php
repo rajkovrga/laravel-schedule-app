@@ -13,7 +13,8 @@ class Schedule extends Model
         'user_id',
         'manager_id',
         'company_id',
-        'job_id',
+        'company_job_id',
+        'schedule_date'
     ];
 
 
@@ -32,5 +33,10 @@ class Schedule extends Model
     public function companyJob(): BelongsTo
     {
         return $this->belongsTo(CompanyJob::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }
