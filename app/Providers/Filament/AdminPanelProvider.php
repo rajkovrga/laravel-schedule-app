@@ -5,7 +5,7 @@ namespace App\Providers\Filament;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 use App\Filament\Pages\CustomTwoFactorPage;
 use App\Filament\Pages\Settings;
-use App\Models\Company;
+use App\Filament\Widgets\CalendarWidget;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -23,6 +23,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
 use Outerweb\FilamentSettings\Filament\Plugins\FilamentSettingsPlugin;
+use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -63,6 +64,8 @@ class AdminPanelProvider extends PanelProvider
                         Settings::class,
                     ]),
                 FilamentSpatieRolesPermissionsPlugin::make(),
+                FilamentFullCalendarPlugin::make()
+                    ->editable(false)
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -72,7 +75,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                CalendarWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

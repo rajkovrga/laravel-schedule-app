@@ -70,7 +70,9 @@ class UserResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->columns(static::getListTableColumns());
+            ->columns(
+                static::getListTableColumns(),
+            );
     }
 
     public static function getListTableColumns(): array

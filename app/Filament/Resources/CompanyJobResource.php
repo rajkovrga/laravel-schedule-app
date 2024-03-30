@@ -19,6 +19,7 @@ class CompanyJobResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
     protected static ?int $navigationSort = 20;
+
     public static function canAccess(): bool
     {
         return auth()->user()->hasAnyPermission([Permissions::ViewJobs, Permissions::ViewAllJobs]);

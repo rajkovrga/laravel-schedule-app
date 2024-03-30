@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ManagerScheduleResource\Pages;
 use App\Models\Schedule;
-use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Form;
@@ -15,14 +14,14 @@ use Filament\Tables\Table;
 class ManagerScheduleResource extends Resource
 {
     protected static ?string $model = Schedule::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Repeater::make('members')
+                Repeater::make('dates')
+                    ->disabled()
                     ->label('Potential schedules')
                     ->default(Schedule::all(['dates'])->toArray())
                     ->schema([

@@ -17,11 +17,11 @@ class Schedule extends Model
         'schedule_date'
     ];
 
-
     protected function casts(): array
     {
         return [
             'dates' => MultiTimestampRangeCast::class,
+            'schedule_date' => 'datetime'
         ];
     }
 

@@ -9,6 +9,7 @@
         "althinect/filament-spatie-roles-permissions": "^2.2",
         "filament/filament": "^3.2",
         "filament/forms": "^3.2",
+        "hydrat/filament-table-layout-toggle": "^1.2",
         "jeffgreco13/filament-breezy": "^2.3",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
@@ -16,6 +17,7 @@
         "outerweb/filament-settings": "^1.1",
         "outerweb/settings": "^1.0",
         "rawilk/filament-password-input": "^2.0",
+        "saade/filament-fullcalendar": "^3.0",
         "spatie/laravel-permission": "^6.4",
         "tpetry/laravel-postgresql-enhanced": "^0.37.0"
     },

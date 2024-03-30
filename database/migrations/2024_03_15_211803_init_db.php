@@ -43,7 +43,7 @@ return new class extends Migration {
             $table->identity(always: true)->primary();
             $table->dateTimeTz('schedule_date')->nullable();
             $table->timestampsTz();
-            $table->timestampTzMultiRange('dates');
+            $table->timestampMultiRange('dates');
 
             $table->foreignId('company_id')
                 ->references('id')

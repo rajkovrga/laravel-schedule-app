@@ -19,7 +19,24 @@ class MultiTimestampRangeCast implements CastsAttributes
     {
         // {["2024-03-21 00:00:00+00","2024-03-29 00:00:00+00"]}
 
-        return $value;
+        $firstIndex = strpos($value, '{');
+        $lastIndex = strrpos($value, '}');
+
+        $value = substr_replace($value, '[', $firstIndex, 1);
+        $value = substr_replace($value, ']', $lastIndex, 1);
+
+        $arrayOfDates = json_decode($value);
+
+        $formattedArray = [];
+
+        foreach ($arrayOfDates as $dateArray) {
+            $formattedArray[] = [
+                'start_date' => $dateArray[0],
+                'end_date' => $dateArray[1]
+            ];
+        }
+
+        return $formattedArray;
     }
 
     /**

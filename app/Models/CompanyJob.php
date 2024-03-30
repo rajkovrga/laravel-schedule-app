@@ -17,6 +17,7 @@ class CompanyJob extends Model
     protected $fillable = [
         'name',
         'duration',
+        'during',
         'company_id'
     ];
 

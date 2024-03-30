@@ -2,4 +2,6 @@
 
 declare(strict_types=1);
 
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
+ Route::get('/phpinfo', function () {
+    return phpinfo();
+});
