@@ -65,6 +65,7 @@ class AdminPanelProvider extends PanelProvider
                     ]),
                 FilamentSpatieRolesPermissionsPlugin::make(),
                 FilamentFullCalendarPlugin::make()
+                    ->selectable()
                     ->editable(false)
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
@@ -75,7 +76,6 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                CalendarWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
