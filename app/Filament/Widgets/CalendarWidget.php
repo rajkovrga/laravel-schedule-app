@@ -17,7 +17,7 @@ class CalendarWidget extends FullCalendarWidget
     {
         return Schedule::query()
             ->whereNotNull('schedule_date')
-            ->where('schedule_date', '>=' , Carbon::now())
+            ->where('schedule_date', '>=' , $fetchInfo['start'])
             ->get()
             ->map(
                 fn (Schedule $schedule) => EventData::make()

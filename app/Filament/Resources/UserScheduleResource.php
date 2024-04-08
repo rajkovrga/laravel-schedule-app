@@ -60,14 +60,12 @@ class UserScheduleResource extends Resource
                             ->native(false)
                             ->minDate(now())
                             ->timezone('UTC')
-                            ->jalali()
                             ->required(),
                         DateTimePicker::make('end_date')
                             ->native(false)
                             ->minDate(now())
                             ->timezone('UTC')
                             ->required()
-                            ->jalali()
                     ])
                     ->columns(2)
             ]);

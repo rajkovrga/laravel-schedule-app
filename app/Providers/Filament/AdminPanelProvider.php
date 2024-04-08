@@ -56,16 +56,14 @@ class AdminPanelProvider extends PanelProvider
                         navigationGroup: 'Settings',
                     )
                     ->enableSanctumTokens()
-                    ->enableTwoFactorAuthentication(
-                        action: CustomTwoFactorPage::class
-                    ),
+                    ->enableTwoFactorAuthentication(),
                 FilamentSettingsPlugin::make()
                     ->pages([
                         Settings::class,
                     ]),
                 FilamentSpatieRolesPermissionsPlugin::make(),
                 FilamentFullCalendarPlugin::make()
-                    ->selectable()
+                    ->selectable(false)
                     ->editable(false)
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
