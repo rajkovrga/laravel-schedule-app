@@ -15,11 +15,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Jeffgreco13\FilamentBreezy\Traits\TwoFactorAuthenticatable;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasAvatar, MustVerifyEmail
 {
-    use HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles;
+    use HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -72,4 +73,6 @@ class User extends Authenticatable implements HasAvatar, MustVerifyEmail
     {
         return $this->avatar_url ? Storage::url($this->avatar_url) : null;
     }
+
+
 }

@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
             'email' => 'user@vrga.dev',
             'password' => '12345',
             'email_verified_at' => now(),
-            'company_id' => $company->id,
+            'company_id' => null,
         ]);
 
         $adminUser->assignRole(Roles::User);
