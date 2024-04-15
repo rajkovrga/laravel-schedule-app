@@ -4,7 +4,8 @@ namespace App\Filament\Widgets;
 
 use App\Models\Schedule;
 use Filament\Actions\Action;
-use Filament\Forms\Components\TextInput;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\ViewField;
 use Illuminate\Database\Eloquent\Model;
 use Saade\FilamentFullCalendar\Data\EventData;
 use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
@@ -12,13 +13,31 @@ use Saade\FilamentFullCalendar\Actions;
 
 class CalendarWidget extends FullCalendarWidget
 {
-    public Model | string | null $model = Schedule::class;
-
+    public Model|string|null $model = Schedule::class;
 
     protected function viewAction(): Action
     {
-        return Actions\ViewAction::make()
-            ;
+        return Actions\ViewAction::make('schedule-view')
+            ->action(function (Action $action) {
+                $action->cancel();
+            })
+            ->form([
+                ViewField::make('show-schedule')
+                    ->view('components.dashboard.show-schedule',[
+                        'record' => $this->record
+                    ])
+            ])
+            ->modalHeading('Schedule Details');
+    }
+
+    protected function modalActions(): array
+    {
+        return [];
+    }
+
+    protected function headerActions(): array
+    {
+        return [];
     }
 
     /**
