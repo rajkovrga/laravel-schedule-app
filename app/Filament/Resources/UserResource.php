@@ -11,6 +11,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Spatie\Permission\Models\Role;
 
@@ -78,6 +79,10 @@ class UserResource extends Resource
     public static function getListTableColumns(): array
     {
         return [
+            ImageColumn::make('avatar_url')
+                ->label('')
+                ->defaultImageUrl(url('/storage/images/avatar.png'))
+                ->circular(),
             Tables\Columns\TextColumn::make('name')
                 ->searchable(),
             Tables\Columns\TextColumn::make('email')
